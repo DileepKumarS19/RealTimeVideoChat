@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import { createServer } from "node:http";
 import {connectToSocket} from "./controllers/manageSocketio.js"
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 import userRoutes from "./routes/users.routes.js"
 
@@ -29,7 +32,7 @@ app.use("/api/v1/users", userRoutes);
 
 const start = async()=> {
     app.set("mongo_user")
-    const connectionDb = await mongoose.connect("mongodb+srv://dileepkumardilideepu:Dileep19102002@cluster0.rkrtwz0.mongodb.net/");
+    const connectionDb = await mongoose.connect(process.env.MONGO_URL);
     console.log(`Database conneted to ${connectionDb.connection.host}`);
     server.listen(app.get("port"), ()=>{
         console.log("App is Listening on Port 8000");
